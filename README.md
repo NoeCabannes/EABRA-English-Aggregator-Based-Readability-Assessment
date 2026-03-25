@@ -46,6 +46,8 @@ This is the most efficient way to process multiple texts.
 
 ```python
 import pandas as pd
+import sys
+print(sys.executable)
 from eabra.pipeline import EABRAPipeline
 
 # 1. Initialize the pipeline
@@ -56,8 +58,8 @@ pipeline = EABRAPipeline()
 data = {
     'text_id': [1, 2],
     'text': [
-        "The cat sat on the mat. It was a very nice mat. The cat liked the mat.",
-        "Concurrently, the economic ramifications of implementing such a substantial quantitative easing program are profound, significantly altering the macroeconomic landscape."
+        "When you think of dinosaurs and where they lived, what do you picture? Do you see hot, steamy swamps, thick jungles, or sunny plains? Dinosaurs lived in those places, yes. But did you know that some dinosaurs lived in the cold and the darkness near the North and South Poles? This surprised scientists, too. Paleontologists used to believe that dinosaurs lived only in the warmest parts of the world. They thought that dinosaurs could only have lived in places where turtles, crocodiles, and snakes live today. Later, these dinosaur scientists began finding bones in surprising places. One of those surprising fossil beds is a place called Dinosaur Cove, Australia. One hundred million years ago, Australia was connected to Antarctica. Both continents were located near the South Pole. Today, paleontologists dig dinosaur fossils out of the ground. They think about what those ancient bones must mean.",
+        "The Dunwich horror itself came between Lammas and the equinox in 1928, and Dr. Armitage was among those who witnessed its monstrous prologue. He had heard, meanwhile, of Whateley's grotesque trip to Cambridge, and of his frantic efforts to borrow or copy from the Necronomicon at the Widener Library. Those efforts had been in vain, since Armitage had issued warnings of the keenest intensity to all librarians having charge of the dreaded volume. Wilbur had been shockingly nervous at Cambridge; anxious for the book, yet almost equally anxious to get home again, as if he feared the results of being away long. Early in August the half-expected outcome developed, and in the small hours of the third Dr. Armitage was awakened suddenly by the wild, fierce cries of the savage watchdog on the college campus. Deep and terrible, the snarling, half-mad growls and barks continued; always in mounting volume, but with hideously significant pauses. Then there rang out a scream from a wholly different throat—such a scream as roused half the sleepers of Arkham and haunted their dreams ever afterward—such a scream as could come from not being born of earth, or wholly of earth."
     ]
 }
 df = pd.DataFrame(data)
@@ -70,8 +72,16 @@ results_df = pipeline.process_dataframe(df, text_column='text')
 # 4. View results
 print(f"Extraction complete! Found {len(results_df.columns)} columns.")
 
-# Print a specific metric, e.g., Average Parse Tree Depth
-print(results_df[['text_id', 'SYNdevHGT_avg']])
+# Print all metrics, iterating over the columns
+print("\nFull output for Text 1 and Text 2:")
+for col in results_df.columns:
+    if col not in ['text_id', 'text']:
+        val1 = results_df.iloc[0][col]
+        val2 = results_df.iloc[1][col]
+        if isinstance(val1, float):
+            print(f"{col:25s}: Text 1 = {val1:7.2f} | Text 2 = {val2:7.2f}")
+        else:
+            print(f"{col:25s}: Text 1 = {str(val1):>7s} | Text 2 = {str(val2):>7s}")
 ```
 
 ### Processing a single text string
