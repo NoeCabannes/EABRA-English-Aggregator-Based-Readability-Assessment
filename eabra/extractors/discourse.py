@@ -13,6 +13,11 @@ def extract(doc):
     
     pron_props = []
     def_props = []
+    dia_bingui = []
+    dia_ppei1 = []
+    dia_ppei2 = []
+    
+    quote_chars = {'"', "'", '“', '”', '‘', '’', '«', '»'}
     
     for sent in doc.sents:
         num_nouns = sum(1 for token in sent if token.pos_ == 'NOUN')
@@ -29,8 +34,31 @@ def extract(doc):
             pron_props.append(0.0)
             def_props.append(0.0)
             
+        # Dialogue Variables
+        # DISdiaBINGUI: Presence of dialogue quotes.
+        num_quotes = sum(1 for token in sent if token.text in quote_chars)
+        dia_bingui.append(1 if num_quotes > 0 else 0)
+        
+        # DISdiaPPEI1: Percentage of exclamation and question marks considering all sentence stops.
+        num_excl_quest = sum(1 for token in sent if token.text in {'!', '?'})
+        num_stops = sum(1 for token in sent if token.text in {'.', '!', '?'})
+        if num_stops > 0:
+            dia_ppei1.append((num_excl_quest / num_stops) * 100.0)
+        else:
+            dia_ppei1.append(0.0)
+            
+        # DISdiaPPEI2: Percentage of exclamation and question marks considering all sentence stops and colons.
+        num_stops_colons = sum(1 for token in sent if token.text in {'.', '!', '?', ':'})
+        if num_stops_colons > 0:
+            dia_ppei2.append((num_excl_quest / num_stops_colons) * 100.0)
+        else:
+            dia_ppei2.append(0.0)
+            
     # Aggregate
     features.update(aggregate_feature_dict('DISrefPN', pron_props))
     features.update(aggregate_feature_dict('DISrefDN', def_props))
+    features.update(aggregate_feature_dict('DISdiaBINGUI', dia_bingui))
+    features.update(aggregate_feature_dict('DISdiaPPEI1', dia_ppei1))
+    features.update(aggregate_feature_dict('DISdiaPPEI2', dia_ppei2))
     
     return features
