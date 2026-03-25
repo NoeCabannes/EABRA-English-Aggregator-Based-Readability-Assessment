@@ -6,8 +6,8 @@ def main():
     pipeline = EABRAPipeline()
     
     # Sample texts: One simple (children's story like), one complex (news article)
-    text1 = "The cat sat on the mat. It was a very nice mat. The cat liked the mat."
-    text2 = "Concurrently, the economic ramifications of implementing such a substantial quantitative easing program are profound, significantly altering the macroeconomic landscape."
+    text1 = """The cat sat on the mat. It was a very nice mat. The cat liked the mat."""
+    text2 = """Concurrently, the economic ramifications of implementing such a substantial quantitative easing program are profound, significantly altering the macroeconomic landscape."""
     
     df = pd.DataFrame({'text_id': [1, 2], 'text': [text1, text2]})
     
