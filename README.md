@@ -2,7 +2,7 @@
 
 EABRA is a Python toolkit designed to evaluate the readability of English texts. It is the English counterpart to the French FABRA toolkit. It automatically extracts a wide array of language features (Length, Lexical, Syntactic, and Discourse) from your text and calculates 18 statistical aggregators for each feature, providing an extremely detailed linguistic profile of the input. It resues the language variables and aggregators from FABRA.
 
-## Features Extracted
+## Features extracted
 
 EABRA groups its extractions into the following families:
 1. **Length-based Variables**: Sentence length (words per sentence), Word length (letters per word, syllables per word).
@@ -14,20 +14,20 @@ All sentence-level and word-level features are passed through **18 statistical a
 
 ---
 
-## 🛠️ Prerequisites & Installation
+## 🛠️ Prerequisites & installation
 
-### 1. Python Version
+### 1. Python version
 **Important:** EABRA utilizes `spaCy` under the hood for advanced NLP tasks. `spaCy` relies on compiled C-extensions. Therefore, it is highly recommended to use **Python 3.11, 3.12, or 3.13**. 
 *(Using brand new versions like Python 3.14 may cause installation errors as pre-built wheels might not be available yet).*
 
-### 2. Install Dependencies
+### 2. Install dependencies
 Open your terminal or command prompt and run the following command to install the required Python libraries:
 
 ```bash
 pip install spacy pydantic pyphen lexical-diversity textstat pandas scipy numpy "setuptools<70.0.0"
 ```
 
-### 3. Download the spaCy Language Model
+### 3. Download the spaCy language model
 EABRA requires the English language model for `spaCy`. Download it by running:
 
 ```bash
@@ -36,7 +36,7 @@ python -m spacy download en_core_web_sm
 
 ---
 
-## 🚀 How to Use EABRA
+## 🚀 How to use EABRA
 
 You can use EABRA to process a single text string or process an entire dataset (Pandas DataFrame) at once.
 
@@ -74,7 +74,7 @@ print(f"Extraction complete! Found {len(results_df.columns)} columns.")
 print(results_df[['text_id', 'SYNdevHGT_avg']])
 ```
 
-### Processing a Single Text String
+### Processing a single text string
 
 ```python
 from eabra.pipeline import EABRAPipeline
