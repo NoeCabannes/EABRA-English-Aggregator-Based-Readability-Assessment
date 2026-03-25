@@ -93,7 +93,7 @@ from eabra.pipeline import EABRAPipeline
 pipeline = EABRAPipeline()
 
 # 2. Process your text
-text = "The quick brown fox jumps over the lazy dog."
+text = """The quick brown fox jumps over the lazy dog."""
 features = pipeline.process_text(text)
 
 # The result is a dictionary containing hundreds of aggregated features
